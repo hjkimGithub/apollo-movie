@@ -50,6 +50,10 @@ const GET_MOVIES = gql`
             rating
             description_intro
         }
+        suggestions(id:$id){
+            id
+            medium_cover_image
+        }
     }
 `
 
@@ -73,7 +77,9 @@ const Detail = () => {
                 </>
             )}
           </Column>
-          <Poster bg={data && data.movie ? data.movie.medium_cover_image: ""}></Poster>
+          {/* <Poster bg={data && data.movie ? data.movie.medium_cover_image: ""}></Poster> */}
+          <Poster bg={data?.movie?.medium_cover_image}></Poster>
+          {/* {data && data.suggestions && data.suggestions.map(s => )} */}
         </Container>
       );
 }
