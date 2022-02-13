@@ -8,9 +8,11 @@ const GET_MOVIES = gql`
         movies {
             id
             medium_cover_image
+            isLiked @client
         }
     }
-`
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,7 +57,7 @@ const Movies = styled.div`
   top: -50px;
 `;
 
-const Home = () => {
+function Home () {
     const {loading, data} = useQuery(GET_MOVIES);
     return (
         <Container>
@@ -64,15 +66,18 @@ const Home = () => {
                 <Subtitle>Graphql Movie Query</Subtitle>
             </Header>
             {loading && <Loading>Loading...</Loading>}
-            {!loading && data.movies && (
             <Movies>
-            {data.movies.map(m => (
-                <Movie key={m.id} id={m.id} bg={m.medium_cover_image} />
-            ))}
+                {data?.movies?.map(m => (
+                <Movie 
+                    key={m.id} 
+                    id={m.id} 
+                    isLiked={m.isLiked} 
+                    bg={m.medium_cover_image} 
+                />
+                ))}
             </Movies>
-            )}
         </Container>
     );
-};
+}
 
 export default Home;
